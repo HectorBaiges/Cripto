@@ -37,8 +37,9 @@ def GF_Tables():
         prod = GF_product_p(ant,g)
         exp += [prod]
         log[prod] = i+1
+    return exp, log
 
-def GF_product_T(a,b):
+def GF_product_t(a,b):
     global exp
     global log
     ret = exp[(log[a] + log[b]) % 255]
@@ -55,7 +56,4 @@ def GF_invers(a):
     return ret
 
 GF_Tables()
-print(GF_product_p(0xff,0x02))
-print(GF_product_T(0xff,0x02))
-print(exp)
-print(log)
+GF_product_t(2,0x0e)

@@ -23,7 +23,7 @@ def printMatrix(aMatrix):
 
 def subByteTest_identidad():
     aes = AES_SB(master_key)
-    m = 0x1597C4EF331CC28B7E6D1B2EB3EA3B95
+    m = master_message
     c = aes.encrypt(m)
     for i in range(128):
         for j in range(i+1, 128):
@@ -31,12 +31,11 @@ def subByteTest_identidad():
             cj = aes.encrypt(m ^ (1 << j))
             ij_mov = 1 << i ^ 1 << j
             cij = aes.encrypt(m ^ ij_mov)
-            #print(hex(cij), end="\r", flush=True)
             assert(c == ci ^ cj ^ cij)
             
 def subByteTest():
     aes = AES(master_key)
-    m = 0x1597C4EF331CC28B7E6D1B2EB3EA3B95
+    m = master_message
     c = aes.encrypt(m)
     for i in range(128):
         for j in range(i+1, 128):
@@ -44,12 +43,11 @@ def subByteTest():
             cj = aes.encrypt(m ^ (1 << j))
             ij_mov = 1 << i ^ 1 << j
             cij = aes.encrypt(m ^ ij_mov)
-            #print(hex(cij), end="\r", flush=True)
             assert(c != ci ^ cj ^ cij)
 
 def shiftRowsTest_identidad():
     aes = AES_SR(master_key)
-    m = 0x1597C4EF331CC28B7E6D1B2EB3EA3B95
+    m = master_message
     c = aes.encrypt(m)
     hexC = hex(c)
     for i in range(4):
@@ -67,7 +65,7 @@ def shiftRowsTest_identidad():
 
 def mixColumnsTest_identidad():
     aes = AES_MC(master_key)
-    m = 0x1597C4EF331CC28B7E6D1B2EB3EA3B95
+    m = master_message
     c = aes.encrypt(m)
     for i in range(4):
         mi = m ^ (1 << i * 32)
