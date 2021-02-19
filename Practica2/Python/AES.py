@@ -165,10 +165,11 @@ class AES:
         self.__inv_shift_rows(state_matrix)
         self.__inv_sub_bytes(state_matrix)
 
-    def __sub_bytes(self, s):
+    def sub_bytes(self, s):
        for i in range(4):
             for j in range(4):
                 s[i][j] = Sbox[s[i][j]]
+       return s 
 
 
     def __inv_sub_bytes(self, s):
@@ -198,9 +199,10 @@ class AES:
         a[3] ^= t ^ xtime(a[3] ^ u)
 
 
-    def __mix_columns(self, s):
+    def mix_columns(self, s):
         for i in range(4):
             self.__mix_single_column(s[i])
+        return s
 
 
     def __inv_mix_columns(self, s):
@@ -219,9 +221,18 @@ if __name__ == "__main__":
         f = open("2019_09_25_17_00_56_hector.baiges.key","rb")
         master_key = f.read()
         key = 0xb996e5bad37d0413a90f05a269ae8981
+        key = 0x08080808080808080808080808080808
+        
         print(master_key)
         
-        """aes = AES(key)
+        aes = AES(key)
+
+        matrix = text2matrix(0x0)
+
+        matrix = aes.sub_bytes(matrix)
+
+        print(hex(matrix2text(matrix)))
+        '''
         f = open("2019_09_25_17_00_56_hector.baiges.enc","rb")
         p = open("result.txt","wb+")
         for i in range(1883):
@@ -234,4 +245,4 @@ if __name__ == "__main__":
         plaintext = 0x3243f6a8885a308d313198a2e0370734
         encrypted = aes.encrypt(plaintext)
         decplain = aes.decrypt(encrypted)
-        print(decplain)"""
+        print(decplain)'''
